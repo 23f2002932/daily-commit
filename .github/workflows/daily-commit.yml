@@ -9,6 +9,10 @@ on:
 
 jobs:
   daily-commit-job:
+    # Add this permissions block
+    permissions:
+      contents: write
+    
     runs-on: ubuntu-latest
 
     steps:
@@ -27,7 +31,6 @@ jobs:
           git pull
           
           # Update a file to ensure there's something to commit
-          # This command overwrites a file with the current date and time
           echo "Last updated on $(date)" > last-update.log
           
           # Add the changed file, commit, and push
