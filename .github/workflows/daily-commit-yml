@@ -1,0 +1,36 @@
+name: Daily Commit Action
+
+on:
+  # Schedule to run at 10:00 AM UTC every day
+  schedule:
+    - cron: '0 10 * * *'
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  daily-commit-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Check out the repository's code
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      # Step 2: Create a commit
+      - name: Create commit with email 23f2002932@ds.study.iitm.ac.in
+        run: |
+          # Configure git with a bot name and the required email
+          git config user.name "GitHub Actions Bot"
+          git config user.email "23f2002932@ds.study.iitm.ac.in"
+          
+          # Pull the latest changes from the repository to avoid conflicts
+          git pull
+          
+          # Update a file to ensure there's something to commit
+          # This command overwrites a file with the current date and time
+          echo "Last updated on $(date)" > last-update.log
+          
+          # Add the changed file, commit, and push
+          git add last-update.log
+          git commit -m "Automated daily commit"
+          git push
